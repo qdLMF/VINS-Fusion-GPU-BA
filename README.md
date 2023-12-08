@@ -27,7 +27,7 @@ Meanwhile, the CUDA reimplementation of Bundle-Adjustment in estimator.cpp requi
 
 
 ## Speed-up
-<table style="display:table-cell;vertical-align:middle;text-align:center;font-size:15pt;">
+<table style="display:table-cell;vertical-align:middle;text-align:center;">
 <tr>
 <th rowspan="2">Sequence</th><th colspan="3">CPU (Intel I7-6700K)</th><th>GPU (Nvidia 980TI)</th>
 </tr>
