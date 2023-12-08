@@ -1,7 +1,7 @@
 # VINS-Fusion-CUDA-BA
 This repository is a version of [VINS-Fusion](https://github.com/HKUST-Aerial-Robotics/VINS-Fusion) with a CUDA reimplementation of Bundle-Adjustment.
 
-The CUDA codes are in vins_estimator/src/cuda_bundle_adjustment
+The codes of this reimplementation are in vins_estimator/src/cuda_bundle_adjustment.
 
 
 ## Dependencies
