@@ -7,13 +7,13 @@ The codes of this reimplementation are in [vins_estimator/src/cuda_bundle_adjust
 ## Dependencies
 The essential software environment is as same as [VINS-Fusion](https://github.com/HKUST-Aerial-Robotics/VINS-Fusion). 
 
-While the Bundle-Adjustment in estimator.cpp is reimplemented with CUDA and Eigen, this repository still requires [ceres solver](http://ceres-solver.org/) for non-linear optimization for : 
+While the Bundle Adjustment in estimator.cpp is reimplemented with CUDA and Eigen, this repository still requires [ceres solver](http://ceres-solver.org/) for non-linear optimization for : 
 
-- Bundle-Adjustment in estimator.cpp before frame_count turn to WINDOW_SIZE
+- Bundle Adjustment in estimator.cpp before frame_count turn to WINDOW_SIZE
 - GlobalSFM::construct() in initial_sfm.cpp
 - PoseGraph::optimize4DoF() in pose_graph.cpp.
 
-Meanwhile, the CUDA reimplementation of Bundle-Adjustment in estimator.cpp requires :
+Meanwhile, the CUDA reimplementation of Bundle Adjustment in estimator.cpp requires :
 
 - C++14
 
