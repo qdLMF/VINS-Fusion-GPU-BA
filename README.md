@@ -128,4 +128,4 @@ Currently only support scenarios where the following conditions are all satisfie
 
 ## Acknowledgement
 This repository is based upon [VINS-Fusion](https://github.com/HKUST-Aerial-Robotics/VINS-Fusion).
-Also, many thanks to [VINS-Course](https://github.com/HeYijia/VINS-Course) for its step-by-step demonstrations of how Bundle-Adjustment works.
+Also, many thanks to [VINS-Course](https://github.com/HeYijia/VINS-Course) for its step-by-step demonstrations of how Bundle Adjustment works.
