@@ -26,6 +26,14 @@ Meanwhile, the CUDA reimplementation of Bundle Adjustment in estimator.cpp requi
 - [Eigen](https://eigen.tuxfamily.org/) (>= 3.3.9)
 
 
+# How To Build
+Before build this repo, some CMAKE variables in [vins_estimator/src/cuda_bundle_adjustment/CMakeLists](https://github.com/qdLMF/VINS-Fusion-GPU-BA/blob/master/vins_estimator/src/cuda_bundle_adjustment/CMakeLists.txt) need to be modified to fix your enviroments : 
+```
+set(CMAKE_CUDA_COMPILER /usr/local/cuda/bin/nvcc)
+set(CUDA_TOOLKIT_ROOT_DIR /usr/local/cuda/bin/nvcc)
+set(CMAKE_CUDA_ARCHITECTURES 52)
+```
+
 
 ## Speed-up
 <table style="display:table-cell;vertical-align:middle;text-align:center;">
