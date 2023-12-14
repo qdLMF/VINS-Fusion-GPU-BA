@@ -8,9 +8,8 @@ set(CMAKE_CUDA_FLAGS_RELEASE "-O3 -DNDEBUG -w")	# "-w" means "ignore all warning
 
 find_package(CUDA REQUIRED)
 message(STATUS "CUDA_LIBRARIES : ${CUDA_LIBRARIES}")
-
-include_directories(/usr/local/cuda/include)   		# for "#include <math_functions.hpp>"
-include_directories(/usr/local/cuda/include/crt)   	# for "#include <math_functions.hpp>"
+message(STATUS "CUDA_INCLUDE_DIRS : ${CUDA_INCLUDE_DIRS}")
+include_directories(${CUDA_INCLUDE_DIRS})
 
 add_library(CUDAVinsFusionBundleAdjustment SHARED
 	cuda_kernel_funcs/cublas_funcs.cuh
