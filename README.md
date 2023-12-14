@@ -6,11 +6,11 @@ Modifications are as follow :
 - Estimator::optimization() in estimator.cpp is rewriten as follow :
 ```
 void Estimator::optimization() {
-    if(frame_count == WINDOW_SIZE) {
-        optimization_with_cuda();
-    } else {
-        optimization_with_ceres();
-    }
+	if(frame_count == WINDOW_SIZE) {
+		optimization_with_cuda();
+	} else {
+		optimization_with_ceres();
+	}
 }
 ```
 
