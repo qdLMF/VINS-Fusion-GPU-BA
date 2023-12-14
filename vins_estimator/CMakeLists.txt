@@ -34,8 +34,10 @@ include_directories(
 catkin_package()
 
 ######## added for cuda_bundle_adjustment ########
-include_directories(/usr/local/cuda/include)        # for "#include <math_functions.hpp>"
-include_directories(/usr/local/cuda/include/crt)    # for "#include <math_functions.hpp>"
+find_package(CUDA REQUIRED)
+message(STATUS "CUDA_LIBRARIES : ${CUDA_LIBRARIES}")
+message(STATUS "CUDA_INCLUDE_DIRS : ${CUDA_INCLUDE_DIRS}")
+include_directories(${CUDA_INCLUDE_DIRS})
 add_subdirectory(src/cuda_bundle_adjustment)
 ######## added for cuda_bundle_adjustment ########
 
