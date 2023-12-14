@@ -2,7 +2,7 @@
 This repository is a version of [VINS-Fusion](https://github.com/HKUST-Aerial-Robotics/VINS-Fusion) with a CUDA reimplementation of Bundle Adjustment.
 
 Modifications are as follow : 
-- The codes of this reimplementation are in [vins_estimator/src/cuda_bundle_adjustment](https://github.com/qdLMF/VINS-Fusion-CUDA-BA/tree/master/vins_estimator/src/cuda_bundle_adjustment).
+- The codes of Bundle Adjustment reimplementation are in [vins_estimator/src/cuda_bundle_adjustment](https://github.com/qdLMF/VINS-Fusion-CUDA-BA/tree/master/vins_estimator/src/cuda_bundle_adjustment).
 - Estimator::optimization() in estimator.cpp is rewriten as follow :
 ```
 void Estimator::optimization() {
