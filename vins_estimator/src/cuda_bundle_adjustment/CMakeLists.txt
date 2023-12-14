@@ -8,6 +8,8 @@ set(CMAKE_CUDA_FLAGS_RELEASE "-O3 -DNDEBUG -w")	# "-w" means "ignore all warning
 
 find_package(CUDA REQUIRED)
 message(STATUS "CUDA_LIBRARIES : ${CUDA_LIBRARIES}")
+message(STATUS "CUDA_cublas_LIBRARY : ${CUDA_cublas_LIBRARY}")
+message(STATUS "CUDA_cusolver_LIBRARY : ${CUDA_cusolver_LIBRARY}")
 message(STATUS "CUDA_INCLUDE_DIRS : ${CUDA_INCLUDE_DIRS}")
 include_directories(${CUDA_INCLUDE_DIRS})
 
