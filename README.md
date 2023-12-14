@@ -27,7 +27,7 @@ Meanwhile, the CUDA reimplementation of Bundle Adjustment in estimator.cpp requi
 
 
 # How To Build
-Before build this repo, some CMAKE variables in [vins_estimator/src/cuda_bundle_adjustment/CMakeLists](https://github.com/qdLMF/VINS-Fusion-GPU-BA/blob/master/vins_estimator/src/cuda_bundle_adjustment/CMakeLists.txt) need to be modified to fit your enviroments : 
+Before build this repo, some CMAKE variables in [vins_estimator/src/cuda_bundle_adjustment/CMakeLists](https://github.com/qdLMF/VINS-Fusion-GPU-BA/blob/master/vins_estimator/src/cuda_bundle_adjustment/CMakeLists.txt) need to be modified to fit your enviroment : 
 ```
 set(CMAKE_CUDA_COMPILER /usr/local/cuda/bin/nvcc)       # change it to your path to nvcc
 set(CUDA_TOOLKIT_ROOT_DIR /usr/local/cuda/bin/nvcc)   # change it to your path to nvcc
