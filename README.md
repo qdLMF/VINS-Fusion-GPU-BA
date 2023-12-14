@@ -3,7 +3,7 @@ This repository is a version of [VINS-Fusion](https://github.com/HKUST-Aerial-Ro
 
 Modifications are as follow : 
 - The codes of Bundle Adjustment reimplementation are in [vins_estimator/src/cuda_bundle_adjustment](https://github.com/qdLMF/VINS-Fusion-CUDA-BA/tree/master/vins_estimator/src/cuda_bundle_adjustment).
-- Estimator::optimization() in estimator.cpp is rewriten as follow :
+- Estimator::optimization() in estimator.cpp is rewritten as follow :
 ```
 void Estimator::optimization() {
 	if(frame_count == WINDOW_SIZE) {
