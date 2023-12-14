@@ -141,7 +141,7 @@ Currently only support scenarios where the following conditions are all satisfie
 - STEREO == true
 - ESTIMATE_TD == false
 - ESTIMATE_EXTRINSIC == false
-
+Data type must be FP64. A version with FP32 is also implemented, however, it drifts away.
 
 
 ## Acknowledgements
