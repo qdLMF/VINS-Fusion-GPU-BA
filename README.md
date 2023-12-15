@@ -44,7 +44,7 @@ set(CUDA_TOOLKIT_ROOT_DIR  /usr/local/cuda/bin/nvcc)	# set it to your path to nv
 set(CMAKE_CUDA_ARCHITECTURES  52)	# for example, if your device's compute capability is 6.2, then set it to 62
 ```
 
-If your device's compute capability is >= 6.0, you can just change MyAtomicAdd() [vins_estimator/src/cuda_bundle_adjustment/cuda_kernel_funcs/device_utils.cu](https://github.com/qdLMF/VINS-Fusion-GPU-BA/blob/master/vins_estimator/src/cuda_bundle_adjustment/cuda_kernel_funcs/device_utils.cu) into the following : 
+If your device's compute capability is >= 6.0, you can just change MyAtomicAdd() in [vins_estimator/src/cuda_bundle_adjustment/cuda_kernel_funcs/device_utils.cu](https://github.com/qdLMF/VINS-Fusion-GPU-BA/blob/master/vins_estimator/src/cuda_bundle_adjustment/cuda_kernel_funcs/device_utils.cu) into the following : 
 ```
 template<typename T>
 __device__ T MyAtomicAdd(T* address, T val) { return atomicAdd(address, val); }
