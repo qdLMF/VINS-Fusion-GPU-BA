@@ -6,7 +6,7 @@ Modifications are as follow :
 - Estimator::optimization() in estimator.cpp is rewritten as follow :
 ```
 void Estimator::optimization() {
-	if(frame_count == WINDOW_SIZE) {
+    if(frame_count == WINDOW_SIZE) {
 		optimization_with_cuda();	// solve and marginalize with cuda when the sliding window is full
 	} else {
 		optimization_with_ceres();	// solve with ceres when the sliding window is not yet full
