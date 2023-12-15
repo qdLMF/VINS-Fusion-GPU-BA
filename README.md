@@ -49,7 +49,7 @@ If your device's compute capability is >= 6.0, you can just change MyAtomicAdd()
 template<typename T>
 __device__ T MyAtomicAdd(T* address, T val) { return atomicAdd(address, val); }
 ```
-Or, you can just replace MyAtomicAdd() with atomicAdd() wherever MyAtomicAdd() is used.
+Or, you can just replace MyAtomicAdd() with atomicAdd() wherever MyAtomicAdd() is called.
 
 The basic steps to compile and run this repo is as same as [VINS-Fusion](https://github.com/HKUST-Aerial-Robotics/VINS-Fusion).
 
