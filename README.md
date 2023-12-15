@@ -7,10 +7,10 @@ Modifications are as follow :
 ```
 void Estimator::optimization() {
     if(frame_count == WINDOW_SIZE) {
-		optimization_with_cuda();	// solve and marginalize with cuda when the sliding window is full
-	} else {
-		optimization_with_ceres();	// solve with ceres when the sliding window is not yet full
-	}
+        optimization_with_cuda();	// solve and marginalize with cuda when the sliding window is full
+    } else {
+        optimization_with_ceres();	// solve with ceres when the sliding window is not yet full
+    }
 }
 ```
 
