@@ -43,6 +43,14 @@ set(CMAKE_CUDA_COMPILER  /usr/local/cuda/bin/nvcc)		# set it to your path to nvc
 set(CUDA_TOOLKIT_ROOT_DIR  /usr/local/cuda/bin/nvcc)	# set it to your path to nvcc
 set(CMAKE_CUDA_ARCHITECTURES  52)	# for example, if your device's compute capability is 6.2, then set it to 62
 ```
+
+If your device's compute capability is >= 6.0, you can just change MyAtomicAdd() into the following : 
+```
+template<typename T>
+__device__ T MyAtomicAdd(T* address, T val) { return atomicAdd(address, val); }
+```
+Or, you can just replace MyAtomicAdd() with atomicAdd() wherever MyAtomicAdd() is used.
+
 The basic steps to compile and run this repo is as same as [VINS-Fusion](https://github.com/HKUST-Aerial-Robotics/VINS-Fusion).
 
 
