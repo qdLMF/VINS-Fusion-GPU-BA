@@ -15,7 +15,7 @@ void Estimator::optimization() {
 ```
 
 ## Dependencies
-The essential software environment is as same as [VINS-Fusion](https://github.com/HKUST-Aerial-Robotics/VINS-Fusion). 
+The essential software environment is as same as [VINS-Fusion](https://github.com/HKUST-Aerial-Robotics/VINS-Fusion), tested on Ubuntu 18.04 & Ros Melodic.
 
 While the Bundle Adjustment in estimator.cpp is reimplemented with CUDA and Eigen, this repository still requires [ceres solver](http://ceres-solver.org/) for non-linear optimization for : 
 
@@ -34,6 +34,7 @@ Meanwhile, the CUDA reimplementation of Bundle Adjustment in estimator.cpp requi
 - CUSOLVER
 
 - [Eigen](https://eigen.tuxfamily.org/) (>= 3.3.9)
+
 
 
 # How To Build
