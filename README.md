@@ -157,3 +157,6 @@ Data type must be FP64. A version with FP32 is also implemented, however, it dri
 ## Acknowledgements
 This repository is based upon [VINS-Fusion](https://github.com/HKUST-Aerial-Robotics/VINS-Fusion).
 Also, many thanks to [VINS-Course](https://github.com/HeYijia/VINS-Course) for its step-by-step demonstrations of how Bundle Adjustment works.
+
+## Star History
+[![Star History Chart](https://api.star-history.com/svg?repos=qdLMF/VINS-Fusion-GPU-BA&type=Timeline)](https://star-history.com/#qdLMF/VINS-Fusion-GPU-BA&Timeline)
