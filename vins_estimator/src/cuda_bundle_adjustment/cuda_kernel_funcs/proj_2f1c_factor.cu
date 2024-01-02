@@ -170,22 +170,22 @@ __global__ void proj_2f1c_temp(
     T td_j; td_j = *(dev_ptr_set.td_j + idx_factor);
 
     Eigen::Matrix<T, 3, 1> pts_i;
-    for(int i = 0; i < pts_i.size(); i++) {
+    for(unsigned int i = 0; i < pts_i.size(); i++) {
         pts_i(i) = *(dev_ptr_set.pts_i + i * num_proj_factors + idx_factor);
     }
 
     Eigen::Matrix<T, 3, 1> velocity_i;
-    for(int i = 0; i < velocity_i.size(); i++) {
+    for(unsigned int i = 0; i < velocity_i.size(); i++) {
         velocity_i(i) = *(dev_ptr_set.velocity_i + i * num_proj_factors + idx_factor);
     }
 
     Eigen::Matrix<T, 3, 1> pts_j;
-    for(int i = 0; i < pts_j.size(); i++) {
+    for(unsigned int i = 0; i < pts_j.size(); i++) {
         pts_j(i) = *(dev_ptr_set.pts_j + i * num_proj_factors + idx_factor);
     }
 
     Eigen::Matrix<T, 3, 1> velocity_j;
-    for(int i = 0; i < velocity_j.size(); i++) {
+    for(unsigned int i = 0; i < velocity_j.size(); i++) {
         velocity_j(i) = *(dev_ptr_set.velocity_j + i * num_proj_factors + idx_factor);
     }
 
@@ -202,92 +202,92 @@ __global__ void proj_2f1c_temp(
     Eigen::Matrix<T, 3, 3, Eigen::RowMajor> r_trans;
 
     Eigen::Matrix<T, 3, 1> pts_i_td = pts_i - (cur_td - td_i) * velocity_i;
-    for(int i = 0; i < pts_i_td.size(); i++) {
+    for(unsigned int i = 0; i < pts_i_td.size(); i++) {
         *(dev_ptr_set.pts_i_td + i * num_proj_factors + idx_factor) = pts_i_td(i);
     }
 
     Eigen::Matrix<T, 3, 1> pts_j_td = pts_j - (cur_td - td_j) * velocity_j;
-    for(int i = 0; i < pts_j_td.size(); i++) {
+    for(unsigned int i = 0; i < pts_j_td.size(); i++) {
         *(dev_ptr_set.pts_j_td + i * num_proj_factors + idx_factor) = pts_j_td(i);
     }
 
     pts = pts_i_td / inv_depth_i;    // pts_cam_i = pts_i_td / inv_depth_i;
-    for(int i = 0; i < pts.size(); i++) {
+    for(unsigned int i = 0; i < pts.size(); i++) {
         *(dev_ptr_set.pts_cam_i + i * num_proj_factors + idx_factor) = pts(i);
     }
 
     // q_ex, p_ex, r_ex
-    for(int i = 0; i < q.coeffs().size(); i++) {
+    for(unsigned int i = 0; i < q.coeffs().size(); i++) {
         q.coeffs()(i) = *(dev_ptr_set.q_ex_0 + i * num_proj_factors + idx_factor);
     }
     r = q.toRotationMatrix();
-    for(int i = 0; i < r.size(); i++) {
+    for(unsigned int i = 0; i < r.size(); i++) {
         *(dev_ptr_set.r_ex + i * num_proj_factors + idx_factor) = r(i);
     }
-    for(int i = 0; i < p.size(); i++) {
+    for(unsigned int i = 0; i < p.size(); i++) {
         p(i) = *(dev_ptr_set.p_ex_0 + i * num_proj_factors + idx_factor);
     }
     pts = q * pts + p;  // pts_imu_i = q_ex * pts_cam_i + p_ex
-    for(int i = 0; i < pts.size(); i++) {
+    for(unsigned int i = 0; i < pts.size(); i++) {
         *(dev_ptr_set.pts_imu_i + i * num_proj_factors + idx_factor) = pts(i);
     }
     r_trans = r.transpose();
-    for(int i = 0; i < r_trans.size(); i++) {
+    for(unsigned int i = 0; i < r_trans.size(); i++) {
         *(dev_ptr_set.r_ex_trans + i * num_proj_factors + idx_factor) = r_trans(i);
     }
 
     // q_i, p_i, r_i
-    for(int i = 0; i < q.coeffs().size(); i++) {
+    for(unsigned int i = 0; i < q.coeffs().size(); i++) {
         q.coeffs()(i) = *(dev_ptr_set.q_i + i * num_proj_factors + idx_factor);
     }
     r = q.toRotationMatrix();
-    for(int i = 0; i < r.size(); i++) {
+    for(unsigned int i = 0; i < r.size(); i++) {
         *(dev_ptr_set.r_i + i * num_proj_factors + idx_factor) = r(i);
     }
-    for(int i = 0; i < p.size(); i++) {
+    for(unsigned int i = 0; i < p.size(); i++) {
         p(i) = *(dev_ptr_set.p_i + i * num_proj_factors + idx_factor);
     }
     pts = q * pts + p;   // pts_world = q_i * pts_imu_i + p_i
-    for(int i = 0; i < pts.size(); i++) {
+    for(unsigned int i = 0; i < pts.size(); i++) {
         *(dev_ptr_set.pts_world + i * num_proj_factors + idx_factor) = pts(i);
     }
     r_trans = r.transpose();
-    for(int i = 0; i < r_trans.size(); i++) {
+    for(unsigned int i = 0; i < r_trans.size(); i++) {
         *(dev_ptr_set.r_i_trans + i * num_proj_factors + idx_factor) = r_trans(i);
     }
 
     // q_j, p_j, r_j
-    for(int i = 0; i < q.coeffs().size(); i++) {
+    for(unsigned int i = 0; i < q.coeffs().size(); i++) {
         q.coeffs()(i) = *(dev_ptr_set.q_j + i * num_proj_factors + idx_factor);
     }
     r = q.toRotationMatrix();
-    for(int i = 0; i < r.size(); i++) {
+    for(unsigned int i = 0; i < r.size(); i++) {
         *(dev_ptr_set.r_j + i * num_proj_factors + idx_factor) = r(i);
     }
-    for(int i = 0; i < p.size(); i++) {
+    for(unsigned int i = 0; i < p.size(); i++) {
         p(i) = *(dev_ptr_set.p_j + i * num_proj_factors + idx_factor);
     }
     pts = q.inverse() * (pts - p); // pts_imu_j = q_j.inverse() * (pts_world - p_j)
-    for(int i = 0; i < pts.size(); i++) {
+    for(unsigned int i = 0; i < pts.size(); i++) {
         *(dev_ptr_set.pts_imu_j + i * num_proj_factors + idx_factor) = pts(i);
     }
     r_trans = r.transpose();
-    for(int i = 0; i < r_trans.size(); i++) {
+    for(unsigned int i = 0; i < r_trans.size(); i++) {
         *(dev_ptr_set.r_j_trans + i * num_proj_factors + idx_factor) = r_trans(i);
     }
 
-    for(int i = 0; i < q.coeffs().size(); i++) {
+    for(unsigned int i = 0; i < q.coeffs().size(); i++) {
         q.coeffs()(i) = *(dev_ptr_set.q_ex_0 + i * num_proj_factors + idx_factor);
     }
     r = q.toRotationMatrix();
-    for(int i = 0; i < r.size(); i++) {
+    for(unsigned int i = 0; i < r.size(); i++) {
         *(dev_ptr_set.r_ex + i * num_proj_factors + idx_factor) = r(i);
     }
-    for(int i = 0; i < p.size(); i++) {
+    for(unsigned int i = 0; i < p.size(); i++) {
         p(i) = *(dev_ptr_set.p_ex_0 + i * num_proj_factors + idx_factor);
     }
     pts = q.inverse() * (pts - p); // pts_cam_j = q_ex.inverse() * (pts_imu_j - p_ex)
-    for(int i = 0; i < pts.size(); i++) {
+    for(unsigned int i = 0; i < pts.size(); i++) {
         *(dev_ptr_set.pts_cam_j + i * num_proj_factors + idx_factor) = pts(i);
     }
 
@@ -299,31 +299,31 @@ __global__ void proj_2f1c_temp(
     reduce(1, 0) = 0.0;
     reduce(1, 1) = 1.0 / dep_j;
     reduce(1, 2) = -pts(1) / (dep_j * dep_j);
-    for(int i = 0; i < reduce.size(); i++) {
+    for(unsigned int i = 0; i < reduce.size(); i++) {
         *(dev_ptr_set.reduce + i * num_proj_factors + idx_factor) = reduce(i);
     }
 
     Eigen::Matrix<T, 3, 3, Eigen::RowMajor> tmp_r_1;
-    for(int i = 0; i < tmp_r_1.size(); i++) {
+    for(unsigned int i = 0; i < tmp_r_1.size(); i++) {
         tmp_r_1(i) = *(dev_ptr_set.r_ex_trans + i * num_proj_factors + idx_factor);
     }
-    for(int i = 0; i < r.size(); i++) {
+    for(unsigned int i = 0; i < r.size(); i++) {
         r(i) = *(dev_ptr_set.r_j_trans + i * num_proj_factors + idx_factor);
     }
     tmp_r_1 = tmp_r_1 * r;
-    for(int i = 0; i < tmp_r_1.size(); i++) {
+    for(unsigned int i = 0; i < tmp_r_1.size(); i++) {
         *(dev_ptr_set.tmp_r_1 + i * num_proj_factors + idx_factor) = tmp_r_1(i);
     }
 
     Eigen::Matrix<T, 3, 3, Eigen::RowMajor> tmp_r_2;
-    for(int i = 0; i < tmp_r_2.size(); i++) {
+    for(unsigned int i = 0; i < tmp_r_2.size(); i++) {
         tmp_r_2(i) = *(dev_ptr_set.r_i + i * num_proj_factors + idx_factor);
     }
-    for(int i = 0; i < r.size(); i++) {
+    for(unsigned int i = 0; i < r.size(); i++) {
         r(i) = *(dev_ptr_set.r_ex + i * num_proj_factors + idx_factor);
     }
     tmp_r_2 = tmp_r_1 * tmp_r_2 * r;
-    for(int i = 0; i < tmp_r_2.size(); i++) {
+    for(unsigned int i = 0; i < tmp_r_2.size(); i++) {
         *(dev_ptr_set.tmp_r_2 + i * num_proj_factors + idx_factor) = tmp_r_2(i);
     }
 
@@ -355,12 +355,12 @@ __global__ void proj_2f1c_jacobian_0_l(     // p_i
     // ********** start : read inputs **********
 
     Eigen::Matrix<T, 2, 3, Eigen::RowMajor> reduce;
-    for(int i = 0; i < reduce.size(); i++) {
+    for(unsigned int i = 0; i < reduce.size(); i++) {
         reduce(i) = *(dev_ptr_set.reduce + i * num_proj_factors + idx_factor);
     }
 
     Eigen::Matrix<T, 3, 3, Eigen::RowMajor> tmp_r_1;
-    for(int i = 0; i < tmp_r_1.size(); i++) {
+    for(unsigned int i = 0; i < tmp_r_1.size(); i++) {
         tmp_r_1(i) = *(dev_ptr_set.tmp_r_1 + i * num_proj_factors + idx_factor);
     }
 
@@ -417,22 +417,22 @@ __global__ void proj_2f1c_jacobian_0_r(     // q_i
     // ********** start : read inputs **********
 
     Eigen::Matrix<T, 3, 1> pts_imu_i;
-    for(int i = 0; i < pts_imu_i.size(); i++) {
+    for(unsigned int i = 0; i < pts_imu_i.size(); i++) {
         pts_imu_i(i) = *(dev_ptr_set.pts_imu_i + i * num_proj_factors + idx_factor);
     }
 
     Eigen::Matrix<T, 2, 3, Eigen::RowMajor> reduce;
-    for(int i = 0; i < reduce.size(); i++) {
+    for(unsigned int i = 0; i < reduce.size(); i++) {
         reduce(i) = *(dev_ptr_set.reduce + i * num_proj_factors + idx_factor);
     }
 
     Eigen::Matrix<T, 3, 3, Eigen::RowMajor> r_i;
-    for(int i = 0; i < r_i.size(); i++) {
+    for(unsigned int i = 0; i < r_i.size(); i++) {
         r_i(i) = *(dev_ptr_set.r_i + i * num_proj_factors + idx_factor);
     }
 
     Eigen::Matrix<T, 3, 3, Eigen::RowMajor> tmp_r_1;
-    for(int i = 0; i < tmp_r_1.size(); i++) {
+    for(unsigned int i = 0; i < tmp_r_1.size(); i++) {
         tmp_r_1(i) = *(dev_ptr_set.tmp_r_1 + i * num_proj_factors + idx_factor);
     }
 
@@ -490,12 +490,12 @@ __global__ void proj_2f1c_jacobian_1_l(     // p_j
     // ********** start : read inputs **********
 
     Eigen::Matrix<T, 2, 3, Eigen::RowMajor> reduce;
-    for(int i = 0; i < reduce.size(); i++) {
+    for(unsigned int i = 0; i < reduce.size(); i++) {
         reduce(i) = *(dev_ptr_set.reduce + i * num_proj_factors + idx_factor);
     }
 
     Eigen::Matrix<T, 3, 3, Eigen::RowMajor> tmp_r_1;
-    for(int i = 0; i < tmp_r_1.size(); i++) {
+    for(unsigned int i = 0; i < tmp_r_1.size(); i++) {
         tmp_r_1(i) = *(dev_ptr_set.tmp_r_1 + i * num_proj_factors + idx_factor);
     }
 
@@ -552,22 +552,22 @@ __global__ void proj_2f1c_jacobian_1_r(     // q_j
     // ********** start : read inputs **********
 
     Eigen::Matrix<T, 3, 1> pts_imu_j;
-    for(int i = 0; i < pts_imu_j.size(); i++) {
+    for(unsigned int i = 0; i < pts_imu_j.size(); i++) {
         pts_imu_j(i) = *(dev_ptr_set.pts_imu_j + i * num_proj_factors + idx_factor);
     }
 
     Eigen::Matrix<T, 2, 3, Eigen::RowMajor> reduce;
-    for(int i = 0; i < reduce.size(); i++) {
+    for(unsigned int i = 0; i < reduce.size(); i++) {
         reduce(i) = *(dev_ptr_set.reduce + i * num_proj_factors + idx_factor);
     }
 
     Eigen::Matrix<T, 3, 3, Eigen::RowMajor> r_ex_trans;
-    for(int i = 0; i < r_ex_trans.size(); i++) {
+    for(unsigned int i = 0; i < r_ex_trans.size(); i++) {
         r_ex_trans(i) = *(dev_ptr_set.r_ex_trans + i * num_proj_factors + idx_factor);
     }
 
     Eigen::Matrix<T, 3, 3, Eigen::RowMajor> tmp_r_1;
-    for(int i = 0; i < tmp_r_1.size(); i++) {
+    for(unsigned int i = 0; i < tmp_r_1.size(); i++) {
         tmp_r_1(i) = *(dev_ptr_set.tmp_r_1 + i * num_proj_factors + idx_factor);
     }
 
@@ -625,22 +625,22 @@ __global__ void proj_2f1c_jacobian_2_l(     // p_ex_0
     // ********** start : read inputs **********
 
     Eigen::Matrix<T, 2, 3, Eigen::RowMajor> reduce;
-    for(int i = 0; i < reduce.size(); i++) {
+    for(unsigned int i = 0; i < reduce.size(); i++) {
         reduce(i) = *(dev_ptr_set.reduce + i * num_proj_factors + idx_factor);
     }
 
     Eigen::Matrix<T, 3, 3, Eigen::RowMajor> r_i;
-    for(int i = 0; i < r_i.size(); i++) {
+    for(unsigned int i = 0; i < r_i.size(); i++) {
         r_i(i) = *(dev_ptr_set.r_i + i * num_proj_factors + idx_factor);
     }
 
     Eigen::Matrix<T, 3, 3, Eigen::RowMajor> r_j_trans;
-    for(int i = 0; i < r_j_trans.size(); i++) {
+    for(unsigned int i = 0; i < r_j_trans.size(); i++) {
         r_j_trans(i) = *(dev_ptr_set.r_j_trans + i * num_proj_factors + idx_factor);
     }
 
     Eigen::Matrix<T, 3, 3, Eigen::RowMajor> r_ex_trans;
-    for(int i = 0; i < r_ex_trans.size(); i++) {
+    for(unsigned int i = 0; i < r_ex_trans.size(); i++) {
         r_ex_trans(i) = *(dev_ptr_set.r_ex_trans + i * num_proj_factors + idx_factor);
     }
 
@@ -698,47 +698,47 @@ __global__ void proj_2f1c_jacobian_2_r(     // q_ex_0
     // ********** start : read inputs **********
 
     Eigen::Matrix<T, 3, 1> p_i;
-    for(int i = 0; i < p_i.size(); i++) {
+    for(unsigned int i = 0; i < p_i.size(); i++) {
         p_i(i) = *(dev_ptr_set.p_i + i * num_proj_factors + idx_factor);
     }
 
     Eigen::Matrix<T, 3, 1> p_j;
-    for(int i = 0; i < p_j.size(); i++) {
+    for(unsigned int i = 0; i < p_j.size(); i++) {
         p_j(i) = *(dev_ptr_set.p_j + i * num_proj_factors + idx_factor);
     }
 
     Eigen::Matrix<T, 3, 1> p_ex;
-    for(int i = 0; i < p_ex.size(); i++) {
+    for(unsigned int i = 0; i < p_ex.size(); i++) {
         p_ex(i) = *(dev_ptr_set.p_ex_0 + i * num_proj_factors + idx_factor);
     }
 
     Eigen::Matrix<T, 3, 1> pts_cam_i;
-    for(int i = 0; i < pts_cam_i.size(); i++) {
+    for(unsigned int i = 0; i < pts_cam_i.size(); i++) {
         pts_cam_i(i) = *(dev_ptr_set.pts_cam_i + i * num_proj_factors + idx_factor);
     }
 
     Eigen::Matrix<T, 2, 3, Eigen::RowMajor> reduce;
-    for(int i = 0; i < reduce.size(); i++) {
+    for(unsigned int i = 0; i < reduce.size(); i++) {
         reduce(i) = *(dev_ptr_set.reduce + i * num_proj_factors + idx_factor);
     }
 
     Eigen::Matrix<T, 3, 3, Eigen::RowMajor> r_i;
-    for(int i = 0; i < r_i.size(); i++) {
+    for(unsigned int i = 0; i < r_i.size(); i++) {
         r_i(i) = *(dev_ptr_set.r_i + i * num_proj_factors + idx_factor);
     }
 
     Eigen::Matrix<T, 3, 3, Eigen::RowMajor> r_j_trans;
-    for(int i = 0; i < r_j_trans.size(); i++) {
+    for(unsigned int i = 0; i < r_j_trans.size(); i++) {
         r_j_trans(i) = *(dev_ptr_set.r_j_trans + i * num_proj_factors + idx_factor);
     }
 
     Eigen::Matrix<T, 3, 3, Eigen::RowMajor> r_ex_trans;
-    for(int i = 0; i < r_ex_trans.size(); i++) {
+    for(unsigned int i = 0; i < r_ex_trans.size(); i++) {
         r_ex_trans(i) = *(dev_ptr_set.r_ex_trans + i * num_proj_factors + idx_factor);
     }
 
     Eigen::Matrix<T, 3, 3, Eigen::RowMajor> tmp_r_2;
-    for(int i = 0; i < tmp_r_2.size(); i++) {
+    for(unsigned int i = 0; i < tmp_r_2.size(); i++) {
         tmp_r_2(i) = *(dev_ptr_set.tmp_r_2 + i * num_proj_factors + idx_factor);
     }
 
@@ -799,19 +799,19 @@ __global__ void proj_2f1c_jacobian_3(       // inv_depth
     // ********** start : read inputs **********
 
     Eigen::Matrix<T, 3, 1> pts_i_td;
-    for(int i = 0; i < pts_i_td.size(); i++) {
+    for(unsigned int i = 0; i < pts_i_td.size(); i++) {
         pts_i_td(i) = *(dev_ptr_set.pts_i_td + i * num_proj_factors + idx_factor);
     }
 
     T inv_depth_i = *(dev_ptr_set.inv_depth + idx_factor);
 
     Eigen::Matrix<T, 2, 3, Eigen::RowMajor> reduce;
-    for(int i = 0; i < reduce.size(); i++) {
+    for(unsigned int i = 0; i < reduce.size(); i++) {
         reduce(i) = *(dev_ptr_set.reduce + i * num_proj_factors + idx_factor);
     }
 
     Eigen::Matrix<T, 3, 3, Eigen::RowMajor> tmp_r_2;
-    for(int i = 0; i < tmp_r_2.size(); i++) {
+    for(unsigned int i = 0; i < tmp_r_2.size(); i++) {
         tmp_r_2(i) = *(dev_ptr_set.tmp_r_2 + i * num_proj_factors + idx_factor);
     }
 
@@ -852,24 +852,24 @@ __global__ void proj_2f1c_jacobian_4(       // cur_td
     // ********** start : read inputs **********
 
     Eigen::Matrix<T, 3, 1> velocity_i;
-    for(int i = 0; i < velocity_i.size(); i++) {
+    for(unsigned int i = 0; i < velocity_i.size(); i++) {
         velocity_i(i) = *(dev_ptr_set.velocity_i + i * num_proj_factors + idx_factor);
     }
 
     Eigen::Matrix<T, 3, 1> velocity_j;
-    for(int i = 0; i < velocity_j.size(); i++) {
+    for(unsigned int i = 0; i < velocity_j.size(); i++) {
         velocity_j(i) = *(dev_ptr_set.velocity_j + i * num_proj_factors + idx_factor);
     }
 
     T inv_depth_i = *(dev_ptr_set.inv_depth + idx_factor);
 
     Eigen::Matrix<T, 2, 3, Eigen::RowMajor> reduce;
-    for(int i = 0; i < reduce.size(); i++) {
+    for(unsigned int i = 0; i < reduce.size(); i++) {
         reduce(i) = *(dev_ptr_set.reduce + i * num_proj_factors + idx_factor);
     }
 
     Eigen::Matrix<T, 3, 3, Eigen::RowMajor> tmp_r_2;
-    for(int i = 0; i < tmp_r_2.size(); i++) {
+    for(unsigned int i = 0; i < tmp_r_2.size(); i++) {
         tmp_r_2(i) = *(dev_ptr_set.tmp_r_2 + i * num_proj_factors + idx_factor);
     }
 
@@ -909,7 +909,7 @@ __global__ void proj_2f1c_residual(
     }
 
     Eigen::Matrix<T, 3, 1> pts_cam_j;
-    for(int i = 0; i < pts_cam_j.size(); i++) {
+    for(unsigned int i = 0; i < pts_cam_j.size(); i++) {
         pts_cam_j(i) = *(dev_ptr_set.pts_cam_j + i * num_proj_factors + idx_factor);
     }
 
@@ -944,7 +944,7 @@ __global__ void proj_2f1c_robust_info(
     // ********** start : read inputs **********
 
     Eigen::Matrix<T, 2, 1> residual;
-    for(int i = 0; i < residual.size(); i++) {
+    for(unsigned int i = 0; i < residual.size(); i++) {
         residual(i) = *(dev_ptr_set.residual + i * num_proj_factors + idx_factor);
     }
 
@@ -1014,12 +1014,12 @@ __global__ void proj_2f1c_rhs_0(    // pose_i
     // ********** start : read inputs **********
 
     T jacobian_0[2][6];
-    for(int i = 0; i < 12; i++) {
+    for(unsigned int i = 0; i < 12; i++) {
         jacobian_0[i / 6][i % 6] = __ldg(dev_ptr_set.jacobian_0 + i * num_proj_factors + idx_factor);
     }
 
     T drho_info_residual[2];
-    for(int i = 0; i < 2; i++) {
+    for(unsigned int i = 0; i < 2; i++) {
         drho_info_residual[i] = __ldg(dev_ptr_set.drho_info_residual + i * num_proj_factors + idx_factor);
     }
 
@@ -1027,10 +1027,9 @@ __global__ void proj_2f1c_rhs_0(    // pose_i
 
     // ********** start : write outputs **********
 
-    unsigned int row_start = dev_ptr_set.rhs_0_row_start[idx_factor];
-
     T left_row[2];
-    for(int i = 0; i < 6; i++) {
+    unsigned int row_start = dev_ptr_set.rhs_0_row_start[idx_factor];
+    for(unsigned int i = 0; i < 6; i++) {
         left_row[0] = jacobian_0[0][i];
         left_row[1] = jacobian_0[1][i];
         T src = -(left_row[0] * drho_info_residual[0] + left_row[1] * drho_info_residual[1]);
@@ -1067,12 +1066,12 @@ __global__ void proj_2f1c_rhs_1(    // pose_j
     // ********** start : read inputs **********
 
     T jacobian_1[2][6];
-    for(int i = 0; i < 12; i++) {
+    for(unsigned int i = 0; i < 12; i++) {
         jacobian_1[i / 6][i % 6] = __ldg(dev_ptr_set.jacobian_1 + i * num_proj_factors + idx_factor);
     }
 
     T drho_info_residual[2];
-    for(int i = 0; i < 2; i++) {
+    for(unsigned int i = 0; i < 2; i++) {
         drho_info_residual[i] = __ldg(dev_ptr_set.drho_info_residual + i * num_proj_factors + idx_factor);
     }
 
@@ -1080,10 +1079,9 @@ __global__ void proj_2f1c_rhs_1(    // pose_j
 
     // ********** start : write outputs **********
 
-    unsigned int row_start = dev_ptr_set.rhs_1_row_start[idx_factor];
-
     T left_row[2];
-    for(int i = 0; i < 6; i++) {
+    unsigned int row_start = dev_ptr_set.rhs_1_row_start[idx_factor];
+    for(unsigned int i = 0; i < 6; i++) {
         left_row[0] = jacobian_1[0][i];
         left_row[1] = jacobian_1[1][i];
         T src = -(left_row[0] * drho_info_residual[0] + left_row[1] * drho_info_residual[1]);
@@ -1120,12 +1118,12 @@ __global__ void proj_2f1c_rhs_2(    // pose_ex_0
     // ********** start : read inputs **********
 
     T jacobian_2[2][6];
-    for(int i = 0; i < 12; i++) {
+    for(unsigned int i = 0; i < 12; i++) {
         jacobian_2[i / 6][i % 6] = __ldg(dev_ptr_set.jacobian_2 + i * num_proj_factors + idx_factor);
     }
 
     T drho_info_residual[2];
-    for(int i = 0; i < 2; i++) {
+    for(unsigned int i = 0; i < 2; i++) {
         drho_info_residual[i] = __ldg(dev_ptr_set.drho_info_residual + i * num_proj_factors + idx_factor);
     }
 
@@ -1133,10 +1131,9 @@ __global__ void proj_2f1c_rhs_2(    // pose_ex_0
 
     // ********** start : write outputs **********
 
-    unsigned int row_start = dev_ptr_set.rhs_2_row_start[idx_factor];
-
     T left_row[2];
-    for(int i = 0; i < 6; i++) {
+    unsigned int row_start = dev_ptr_set.rhs_2_row_start[idx_factor];
+    for(unsigned int i = 0; i < 6; i++) {
         left_row[0] = jacobian_2[0][i];
         left_row[1] = jacobian_2[1][i];
         T src = -(left_row[0] * drho_info_residual[0] + left_row[1] * drho_info_residual[1]);
@@ -1173,12 +1170,12 @@ __global__ void proj_2f1c_rhs_3(    // inv_depth
     // ********** start : read inputs **********
 
     T jacobian_3[2][1];
-    for(int i = 0; i < 2; i++) {
+    for(unsigned int i = 0; i < 2; i++) {
         jacobian_3[i / 1][i % 1] = __ldg(dev_ptr_set.jacobian_3 + i * num_proj_factors + idx_factor);
     }
 
     T drho_info_residual[2];
-    for(int i = 0; i < 2; i++) {
+    for(unsigned int i = 0; i < 2; i++) {
         drho_info_residual[i] = __ldg(dev_ptr_set.drho_info_residual + i * num_proj_factors + idx_factor);
     }
 
@@ -1186,10 +1183,9 @@ __global__ void proj_2f1c_rhs_3(    // inv_depth
 
     // ********** start : write outputs **********
 
-    unsigned int row_start = dev_ptr_set.rhs_3_row_start[idx_factor];
-
     T left_row[2];
-    for(int i = 0; i < 1; i++) {
+    unsigned int row_start = dev_ptr_set.rhs_3_row_start[idx_factor];
+    for(unsigned int i = 0; i < 1; i++) {
         left_row[0] = jacobian_3[0][i];
         left_row[1] = jacobian_3[1][i];
         T src = -(left_row[0] * drho_info_residual[0] + left_row[1] * drho_info_residual[1]);
@@ -1226,12 +1222,12 @@ __global__ void proj_2f1c_rhs_4(    // cur_td
     // ********** start : read inputs **********
 
     T jacobian_4[2][1];
-    for(int i = 0; i < 2; i++) {
+    for(unsigned int i = 0; i < 2; i++) {
         jacobian_4[i / 1][i % 1] = __ldg(dev_ptr_set.jacobian_4 + i * num_proj_factors + idx_factor);
     }
 
     T drho_info_residual[2];
-    for(int i = 0; i < 2; i++) {
+    for(unsigned int i = 0; i < 2; i++) {
         drho_info_residual[i] = __ldg(dev_ptr_set.drho_info_residual + i * num_proj_factors + idx_factor);
     }
 
@@ -1239,10 +1235,9 @@ __global__ void proj_2f1c_rhs_4(    // cur_td
 
     // ********** start : write outputs **********
 
-    unsigned int row_start = dev_ptr_set.rhs_4_row_start[idx_factor];
-
     T left_row[2];
-    for(int i = 0; i < 1; i++) {
+    unsigned int row_start = dev_ptr_set.rhs_4_row_start[idx_factor];
+    for(unsigned int i = 0; i < 1; i++) {
         left_row[0] = jacobian_4[0][i];
         left_row[1] = jacobian_4[1][i];
         T src = -(left_row[0] * drho_info_residual[0] + left_row[1] * drho_info_residual[1]);
@@ -1280,12 +1275,12 @@ __global__ void proj_2f1c_hessian_00(   // pose_i, pose_i
     // ********** start : read inputs **********
 
     T robust_info[2][2];
-    for(int i = 0; i < 4; i++) {
+    for(unsigned int i = 0; i < 4; i++) {
         robust_info[i / 2][i % 2] = __ldg(dev_ptr_set.robust_info + i * num_proj_factors + idx_factor); // *(dev_ptr_set.robust_info + i * num_proj_factors + idx_factor);
     }
 
     T jacobian_0[2][6];
-    for(int i = 0; i < 12; i++) {
+    for(unsigned int i = 0; i < 12; i++) {
         jacobian_0[i / 6][i % 6] = __ldg(dev_ptr_set.jacobian_0 + i * num_proj_factors + idx_factor);  // *(dev_ptr_set.jacobian_0 + i * num_proj_factors + idx_factor);
     }
 
@@ -1293,14 +1288,11 @@ __global__ void proj_2f1c_hessian_00(   // pose_i, pose_i
 
     // ********** start : compute and write outputs **********
 
-    unsigned int row_start = 0;
-    unsigned int col_start = 0;
-
     T left_row[2];
     T right_col[2];
     T temp[2];
-    row_start = dev_ptr_set.hessian_00_row_start[idx_factor];
-    col_start = dev_ptr_set.hessian_00_col_start[idx_factor];
+    unsigned int row_start = dev_ptr_set.hessian_00_row_start[idx_factor];
+    unsigned int col_start = dev_ptr_set.hessian_00_col_start[idx_factor];
     for(int row = 0; row < 6; row++) {
         for(int col = 0; col < 6; col++) {
             left_row[0] = jacobian_0[0][row];
@@ -1349,17 +1341,17 @@ __global__ void proj_2f1c_hessian_01(   // pose_i, pose_j
     // ********** start : read inputs **********
 
     T robust_info[2][2];
-    for(int i = 0; i < 4; i++) {
+    for(unsigned int i = 0; i < 4; i++) {
         robust_info[i / 2][i % 2] = __ldg(dev_ptr_set.robust_info + i * num_proj_factors + idx_factor);
     }
 
     T jacobian_0[2][6];
-    for(int i = 0; i < 12; i++) {
+    for(unsigned int i = 0; i < 12; i++) {
         jacobian_0[i / 6][i % 6] = __ldg(dev_ptr_set.jacobian_0 + i * num_proj_factors + idx_factor);
     }
 
     T jacobian_1[2][6];
-    for(int i = 0; i < 12; i++) {
+    for(unsigned int i = 0; i < 12; i++) {
         jacobian_1[i / 6][i % 6] = __ldg(dev_ptr_set.jacobian_1 + i * num_proj_factors + idx_factor);
     }
 
@@ -1367,14 +1359,11 @@ __global__ void proj_2f1c_hessian_01(   // pose_i, pose_j
 
     // ********** start : compute and write outputs **********
 
-    unsigned int row_start = 0;
-    unsigned int col_start = 0;
-
     T left_row[2];
     T right_col[2];
     T temp[2];
-    row_start = dev_ptr_set.hessian_01_row_start[idx_factor];
-    col_start = dev_ptr_set.hessian_01_col_start[idx_factor];
+    unsigned int row_start = dev_ptr_set.hessian_01_row_start[idx_factor];
+    unsigned int col_start = dev_ptr_set.hessian_01_col_start[idx_factor];
     unsigned int row_start_trans = dev_ptr_set.hessian_10_row_start[idx_factor];
     unsigned int col_start_trans = dev_ptr_set.hessian_10_col_start[idx_factor];
     for(int row = 0; row < 6; row++) {
@@ -1429,17 +1418,17 @@ __global__ void proj_2f1c_hessian_02(   // pose_i, pose_ex_0
     // ********** start : read inputs **********
 
     T robust_info[2][2];
-    for(int i = 0; i < 4; i++) {
+    for(unsigned int i = 0; i < 4; i++) {
         robust_info[i / 2][i % 2] = __ldg(dev_ptr_set.robust_info + i * num_proj_factors + idx_factor);
     }
 
     T jacobian_0[2][6];
-    for(int i = 0; i < 12; i++) {
+    for(unsigned int i = 0; i < 12; i++) {
         jacobian_0[i / 6][i % 6] = __ldg(dev_ptr_set.jacobian_0 + i * num_proj_factors + idx_factor);
     }
 
     T jacobian_2[2][6];
-    for(int i = 0; i < 12; i++) {
+    for(unsigned int i = 0; i < 12; i++) {
         jacobian_2[i / 6][i % 6] = __ldg(dev_ptr_set.jacobian_2 + i * num_proj_factors + idx_factor);
     }
 
@@ -1447,14 +1436,11 @@ __global__ void proj_2f1c_hessian_02(   // pose_i, pose_ex_0
 
     // ********** start : compute and write outputs **********
 
-    unsigned int row_start = 0;
-    unsigned int col_start = 0;
-
     T left_row[2];//[1][2];
     T right_col[2];//[2][1];
     T temp[2];
-    row_start = dev_ptr_set.hessian_02_row_start[idx_factor];
-    col_start = dev_ptr_set.hessian_02_col_start[idx_factor];
+    unsigned int row_start = dev_ptr_set.hessian_02_row_start[idx_factor];
+    unsigned int col_start = dev_ptr_set.hessian_02_col_start[idx_factor];
     unsigned int row_start_trans = dev_ptr_set.hessian_20_row_start[idx_factor];
     unsigned int col_start_trans = dev_ptr_set.hessian_20_col_start[idx_factor];
     for(int row = 0; row < 6; row++) {
@@ -1511,17 +1497,17 @@ __global__ void proj_2f1c_hessian_03(   // pose_i, inv_depth
     // ********** start : read inputs **********
 
     T robust_info[2][2];
-    for(int i = 0; i < 4; i++) {
+    for(unsigned int i = 0; i < 4; i++) {
         robust_info[i / 2][i % 2] = __ldg(dev_ptr_set.robust_info + i * num_proj_factors + idx_factor);
     }
 
     T jacobian_0[2][6];
-    for(int i = 0; i < 12; i++) {
+    for(unsigned int i = 0; i < 12; i++) {
         jacobian_0[i / 6][i % 6] = __ldg(dev_ptr_set.jacobian_0 + i * num_proj_factors + idx_factor);
     }
 
     T jacobian_3[2][1];
-    for(int i = 0; i < 2; i++) {
+    for(unsigned int i = 0; i < 2; i++) {
         jacobian_3[i / 1][i % 1] = __ldg(dev_ptr_set.jacobian_3 + i * num_proj_factors + idx_factor);
     }
 
@@ -1529,14 +1515,11 @@ __global__ void proj_2f1c_hessian_03(   // pose_i, inv_depth
 
     // ********** start : compute and write outputs **********
 
-    unsigned int row_start = 0;
-    unsigned int col_start = 0;
-
     T left_row[2];
     T right_col[2];
     T temp[2];
-    row_start = dev_ptr_set.hessian_03_row_start[idx_factor];
-    col_start = dev_ptr_set.hessian_03_col_start[idx_factor];
+    unsigned int row_start = dev_ptr_set.hessian_03_row_start[idx_factor];
+    unsigned int col_start = dev_ptr_set.hessian_03_col_start[idx_factor];
     unsigned int row_start_trans = dev_ptr_set.hessian_30_row_start[idx_factor];
     unsigned int col_start_trans = dev_ptr_set.hessian_30_col_start[idx_factor];
     for(int row = 0; row < 6; row++) {
@@ -1591,17 +1574,17 @@ __global__ void proj_2f1c_hessian_04(   // pose_i, cur_td
     // ********** start : read inputs **********
 
     T robust_info[2][2];
-    for(int i = 0; i < 4; i++) {
+    for(unsigned int i = 0; i < 4; i++) {
         robust_info[i / 2][i % 2] = __ldg(dev_ptr_set.robust_info + i * num_proj_factors + idx_factor);
     }
 
     T jacobian_0[2][6];
-    for(int i = 0; i < 12; i++) {
+    for(unsigned int i = 0; i < 12; i++) {
         jacobian_0[i / 6][i % 6] = __ldg(dev_ptr_set.jacobian_0 + i * num_proj_factors + idx_factor);
     }
 
     T jacobian_4[2][1];
-    for(int i = 0; i < 2; i++) {
+    for(unsigned int i = 0; i < 2; i++) {
         jacobian_4[i / 1][i % 1] = __ldg(dev_ptr_set.jacobian_4 + i * num_proj_factors + idx_factor);
     }
 
@@ -1609,14 +1592,11 @@ __global__ void proj_2f1c_hessian_04(   // pose_i, cur_td
 
     // ********** start : compute and write outputs **********
 
-    unsigned int row_start = 0;
-    unsigned int col_start = 0;
-
     T left_row[2];
     T right_col[2];
     T temp[2];
-    row_start = dev_ptr_set.hessian_04_row_start[idx_factor];
-    col_start = dev_ptr_set.hessian_04_col_start[idx_factor];
+    unsigned int row_start = dev_ptr_set.hessian_04_row_start[idx_factor];
+    unsigned int col_start = dev_ptr_set.hessian_04_col_start[idx_factor];
     unsigned int row_start_trans = dev_ptr_set.hessian_40_row_start[idx_factor];
     unsigned int col_start_trans = dev_ptr_set.hessian_40_col_start[idx_factor];
     for(int row = 0; row < 6; row++) {
@@ -1669,12 +1649,12 @@ __global__ void proj_2f1c_hessian_11(   // pose_j, pose_j
     // ********** start : read inputs **********
 
     T robust_info[2][2];
-    for(int i = 0; i < 4; i++) {
+    for(unsigned int i = 0; i < 4; i++) {
         robust_info[i / 2][i % 2] = __ldg(dev_ptr_set.robust_info + i * num_proj_factors + idx_factor);
     }
 
     T jacobian_1[2][6];
-    for(int i = 0; i < 12; i++) {
+    for(unsigned int i = 0; i < 12; i++) {
         jacobian_1[i / 6][i % 6] = __ldg(dev_ptr_set.jacobian_1 + i * num_proj_factors + idx_factor);
     }
 
@@ -1682,14 +1662,11 @@ __global__ void proj_2f1c_hessian_11(   // pose_j, pose_j
 
     // ********** start : compute and write outputs **********
 
-    unsigned int row_start = 0;
-    unsigned int col_start = 0;
-
     T left_row[2];
     T right_col[2];
     T temp[2];
-    row_start = dev_ptr_set.hessian_11_row_start[idx_factor];
-    col_start = dev_ptr_set.hessian_11_col_start[idx_factor];
+    unsigned int row_start = dev_ptr_set.hessian_11_row_start[idx_factor];
+    unsigned int col_start = dev_ptr_set.hessian_11_col_start[idx_factor];
     for(int row = 0; row < 6; row++) {
         for(int col = 0; col < 6; col++) {
             left_row[0] = jacobian_1[0][row];
@@ -1738,17 +1715,17 @@ __global__ void proj_2f1c_hessian_12(   // pose_j, pose_ex_0
     // ********** start : read inputs **********
 
     T robust_info[2][2];
-    for(int i = 0; i < 4; i++) {
+    for(unsigned int i = 0; i < 4; i++) {
         robust_info[i / 2][i % 2] = __ldg(dev_ptr_set.robust_info + i * num_proj_factors + idx_factor);
     }
 
     T jacobian_1[2][6];
-    for(int i = 0; i < 12; i++) {
+    for(unsigned int i = 0; i < 12; i++) {
         jacobian_1[i / 6][i % 6] = __ldg(dev_ptr_set.jacobian_1 + i * num_proj_factors + idx_factor);
     }
 
     T jacobian_2[2][6];
-    for(int i = 0; i < 12; i++) {
+    for(unsigned int i = 0; i < 12; i++) {
         jacobian_2[i / 6][i % 6] = __ldg(dev_ptr_set.jacobian_2 + i * num_proj_factors + idx_factor);
     }
 
@@ -1756,14 +1733,11 @@ __global__ void proj_2f1c_hessian_12(   // pose_j, pose_ex_0
 
     // ********** start : compute and write outputs **********
 
-    unsigned int row_start = 0;
-    unsigned int col_start = 0;
-
     T left_row[2];
     T right_col[2];
     T temp[2];
-    row_start = dev_ptr_set.hessian_12_row_start[idx_factor];
-    col_start = dev_ptr_set.hessian_12_col_start[idx_factor];
+    unsigned int row_start = dev_ptr_set.hessian_12_row_start[idx_factor];
+    unsigned int col_start = dev_ptr_set.hessian_12_col_start[idx_factor];
     unsigned int row_start_trans = dev_ptr_set.hessian_21_row_start[idx_factor];
     unsigned int col_start_trans = dev_ptr_set.hessian_21_col_start[idx_factor];
     for(int row = 0; row < 6; row++) {
@@ -1820,17 +1794,17 @@ __global__ void proj_2f1c_hessian_13(   // pose_j, inv_depth
     // ********** start : read inputs **********
 
     T robust_info[2][2];
-    for(int i = 0; i < 4; i++) {
+    for(unsigned int i = 0; i < 4; i++) {
         robust_info[i / 2][i % 2] = __ldg(dev_ptr_set.robust_info + i * num_proj_factors + idx_factor);
     }
 
     T jacobian_1[2][6];
-    for(int i = 0; i < 12; i++) {
+    for(unsigned int i = 0; i < 12; i++) {
         jacobian_1[i / 6][i % 6] = __ldg(dev_ptr_set.jacobian_1 + i * num_proj_factors + idx_factor);
     }
 
     T jacobian_3[2][1];
-    for(int i = 0; i < 2; i++) {
+    for(unsigned int i = 0; i < 2; i++) {
         jacobian_3[i / 1][i % 1] = __ldg(dev_ptr_set.jacobian_3 + i * num_proj_factors + idx_factor);
     }
 
@@ -1838,14 +1812,11 @@ __global__ void proj_2f1c_hessian_13(   // pose_j, inv_depth
 
     // ********** start : compute and write outputs **********
 
-    unsigned int row_start = 0;
-    unsigned int col_start = 0;
-
     T left_row[2];
     T right_col[2];
     T temp[2];
-    row_start = dev_ptr_set.hessian_13_row_start[idx_factor];
-    col_start = dev_ptr_set.hessian_13_col_start[idx_factor];
+    unsigned int row_start = dev_ptr_set.hessian_13_row_start[idx_factor];
+    unsigned int col_start = dev_ptr_set.hessian_13_col_start[idx_factor];
     unsigned int row_start_trans = dev_ptr_set.hessian_31_row_start[idx_factor];
     unsigned int col_start_trans = dev_ptr_set.hessian_31_col_start[idx_factor];
     for(int row = 0; row < 6; row++) {
@@ -1900,17 +1871,17 @@ __global__ void proj_2f1c_hessian_14(   // pose_j, cur_td
     // ********** start : read inputs **********
 
     T robust_info[2][2];
-    for(int i = 0; i < 4; i++) {
+    for(unsigned int i = 0; i < 4; i++) {
         robust_info[i / 2][i % 2] = __ldg(dev_ptr_set.robust_info + i * num_proj_factors + idx_factor);
     }
 
     T jacobian_1[2][6];
-    for(int i = 0; i < 12; i++) {
+    for(unsigned int i = 0; i < 12; i++) {
         jacobian_1[i / 6][i % 6] = __ldg(dev_ptr_set.jacobian_1 + i * num_proj_factors + idx_factor);
     }
 
     T jacobian_4[2][1];
-    for(int i = 0; i < 2; i++) {
+    for(unsigned int i = 0; i < 2; i++) {
         jacobian_4[i / 1][i % 1] = __ldg(dev_ptr_set.jacobian_4 + i * num_proj_factors + idx_factor);
     }
 
@@ -1918,14 +1889,11 @@ __global__ void proj_2f1c_hessian_14(   // pose_j, cur_td
 
     // ********** start : compute and write outputs **********
 
-    unsigned int row_start = 0;
-    unsigned int col_start = 0;
-
     T left_row[2];
     T right_col[2];
     T temp[2];
-    row_start = dev_ptr_set.hessian_14_row_start[idx_factor];
-    col_start = dev_ptr_set.hessian_14_col_start[idx_factor];
+    unsigned int row_start = dev_ptr_set.hessian_14_row_start[idx_factor];
+    unsigned int col_start = dev_ptr_set.hessian_14_col_start[idx_factor];
     unsigned int row_start_trans = dev_ptr_set.hessian_41_row_start[idx_factor];
     unsigned int col_start_trans = dev_ptr_set.hessian_41_col_start[idx_factor];
     for(int row = 0; row < 6; row++) {
@@ -1978,12 +1946,12 @@ __global__ void proj_2f1c_hessian_22(   // pose_ex_0, pose_ex_0
     // ********** start : read inputs **********
 
     T robust_info[2][2];
-    for(int i = 0; i < 4; i++) {
+    for(unsigned int i = 0; i < 4; i++) {
         robust_info[i / 2][i % 2] = __ldg(dev_ptr_set.robust_info + i * num_proj_factors + idx_factor);
     }
 
     T jacobian_2[2][6];
-    for(int i = 0; i < 12; i++) {
+    for(unsigned int i = 0; i < 12; i++) {
         jacobian_2[i / 6][i % 6] = __ldg(dev_ptr_set.jacobian_2 + i * num_proj_factors + idx_factor);
     }
 
@@ -1991,14 +1959,11 @@ __global__ void proj_2f1c_hessian_22(   // pose_ex_0, pose_ex_0
 
     // ********** start : compute and write outputs **********
 
-    unsigned int row_start = 0;
-    unsigned int col_start = 0;
-
     T left_row[2];
     T right_col[2];
     T temp[2];
-    row_start = dev_ptr_set.hessian_22_row_start[idx_factor];
-    col_start = dev_ptr_set.hessian_22_col_start[idx_factor];
+    unsigned int row_start = dev_ptr_set.hessian_22_row_start[idx_factor];
+    unsigned int col_start = dev_ptr_set.hessian_22_col_start[idx_factor];
     for(int row = 0; row < 6; row++) {
         for(int col = 0; col < 6; col++) {
             left_row[0] = jacobian_2[0][row];
@@ -2049,17 +2014,17 @@ __global__ void proj_2f1c_hessian_23(   // pose_ex_0, inv_depth
     // ********** start : read inputs **********
 
     T robust_info[2][2];
-    for(int i = 0; i < 4; i++) {
+    for(unsigned int i = 0; i < 4; i++) {
         robust_info[i / 2][i % 2] = __ldg(dev_ptr_set.robust_info + i * num_proj_factors + idx_factor);
     }
 
     T jacobian_2[2][6];
-    for(int i = 0; i < 12; i++) {
+    for(unsigned int i = 0; i < 12; i++) {
         jacobian_2[i / 6][i % 6] = __ldg(dev_ptr_set.jacobian_2 + i * num_proj_factors + idx_factor);
     }
 
     T jacobian_3[2][1];
-    for(int i = 0; i < 2; i++) {
+    for(unsigned int i = 0; i < 2; i++) {
         jacobian_3[i / 1][i % 1] = __ldg(dev_ptr_set.jacobian_3 + i * num_proj_factors + idx_factor);
     }
 
@@ -2067,14 +2032,11 @@ __global__ void proj_2f1c_hessian_23(   // pose_ex_0, inv_depth
 
     // ********** start : compute and write outputs **********
 
-    unsigned int row_start = 0;
-    unsigned int col_start = 0;
-
     T left_row[2];
     T right_col[2];
     T temp[2];
-    row_start = dev_ptr_set.hessian_23_row_start[idx_factor];
-    col_start = dev_ptr_set.hessian_23_col_start[idx_factor];
+    unsigned int row_start = dev_ptr_set.hessian_23_row_start[idx_factor];
+    unsigned int col_start = dev_ptr_set.hessian_23_col_start[idx_factor];
     unsigned int row_start_trans = dev_ptr_set.hessian_32_row_start[idx_factor];
     unsigned int col_start_trans = dev_ptr_set.hessian_32_col_start[idx_factor];
     for(int row = 0; row < 6; row++) {
@@ -2129,17 +2091,17 @@ __global__ void proj_2f1c_hessian_24(   // pose_ex_0, cur_td
     // ********** start : read inputs **********
 
     T robust_info[2][2];
-    for(int i = 0; i < 4; i++) {
+    for(unsigned int i = 0; i < 4; i++) {
         robust_info[i / 2][i % 2] = __ldg(dev_ptr_set.robust_info + i * num_proj_factors + idx_factor);
     }
 
     T jacobian_2[2][6];
-    for(int i = 0; i < 12; i++) {
+    for(unsigned int i = 0; i < 12; i++) {
         jacobian_2[i / 6][i % 6] = __ldg(dev_ptr_set.jacobian_2 + i * num_proj_factors + idx_factor);
     }
 
     T jacobian_4[2][1];
-    for(int i = 0; i < 2; i++) {
+    for(unsigned int i = 0; i < 2; i++) {
         jacobian_4[i / 1][i % 1] = __ldg(dev_ptr_set.jacobian_4 + i * num_proj_factors + idx_factor);
     }
 
@@ -2147,14 +2109,11 @@ __global__ void proj_2f1c_hessian_24(   // pose_ex_0, cur_td
 
     // ********** start : compute and write outputs **********
 
-    unsigned int row_start = 0;
-    unsigned int col_start = 0;
-
     T left_row[2];
     T right_col[2];
     T temp[2];
-    row_start = dev_ptr_set.hessian_24_row_start[idx_factor];
-    col_start = dev_ptr_set.hessian_24_col_start[idx_factor];
+    unsigned int row_start = dev_ptr_set.hessian_24_row_start[idx_factor];
+    unsigned int col_start = dev_ptr_set.hessian_24_col_start[idx_factor];
     unsigned int row_start_trans = dev_ptr_set.hessian_42_row_start[idx_factor];
     unsigned int col_start_trans = dev_ptr_set.hessian_42_col_start[idx_factor];
     for(int row = 0; row < 6; row++) {
@@ -2206,12 +2165,12 @@ __global__ void proj_2f1c_hessian_33(   // inv_depth, inv_depth
     // ********** start : read inputs **********
 
     T robust_info[2][2];
-    for(int i = 0; i < 4; i++) {
+    for(unsigned int i = 0; i < 4; i++) {
         robust_info[i / 2][i % 2] = __ldg(dev_ptr_set.robust_info + i * num_proj_factors + idx_factor);
     }
 
     T jacobian_3[2][1];
-    for(int i = 0; i < 2; i++) {
+    for(unsigned int i = 0; i < 2; i++) {
         jacobian_3[i / 1][i % 1] = __ldg(dev_ptr_set.jacobian_3 + i * num_proj_factors + idx_factor);
     }
 
@@ -2219,14 +2178,11 @@ __global__ void proj_2f1c_hessian_33(   // inv_depth, inv_depth
 
     // ********** start : compute and write outputs **********
 
-    unsigned int row_start = 0;
-    unsigned int col_start = 0;
-
     T left_row[2];
     T right_col[2];
     T temp[2];
-    row_start = dev_ptr_set.hessian_33_row_start[idx_factor];
-    col_start = dev_ptr_set.hessian_33_col_start[idx_factor];
+    unsigned int row_start = dev_ptr_set.hessian_33_row_start[idx_factor];
+    unsigned int col_start = dev_ptr_set.hessian_33_col_start[idx_factor];
     for(int row = 0; row < 1; row++) {
         for(int col = 0; col < 1; col++) {
             left_row[0] = jacobian_3[0][row];
@@ -2277,17 +2233,17 @@ __global__ void proj_2f1c_hessian_34(   // inv_depth, cur_td
     // ********** start : read inputs **********
 
     T robust_info[2][2];
-    for(int i = 0; i < 4; i++) {
+    for(unsigned int i = 0; i < 4; i++) {
         robust_info[i / 2][i % 2] = __ldg(dev_ptr_set.robust_info + i * num_proj_factors + idx_factor);
     }
 
     T jacobian_3[2][1];
-    for(int i = 0; i < 2; i++) {
+    for(unsigned int i = 0; i < 2; i++) {
         jacobian_3[i / 1][i % 1] = __ldg(dev_ptr_set.jacobian_3 + i * num_proj_factors + idx_factor);
     }
 
     T jacobian_4[2][1];
-    for(int i = 0; i < 2; i++) {
+    for(unsigned int i = 0; i < 2; i++) {
         jacobian_4[i / 1][i % 1] = __ldg(dev_ptr_set.jacobian_4 + i * num_proj_factors + idx_factor);
     }
 
@@ -2295,14 +2251,11 @@ __global__ void proj_2f1c_hessian_34(   // inv_depth, cur_td
 
     // ********** start : compute and write outputs **********
 
-    unsigned int row_start = 0;
-    unsigned int col_start = 0;
-
     T left_row[2];
     T right_col[2];
     T temp[2];
-    row_start = dev_ptr_set.hessian_34_row_start[idx_factor];
-    col_start = dev_ptr_set.hessian_34_col_start[idx_factor];
+    unsigned int row_start = dev_ptr_set.hessian_34_row_start[idx_factor];
+    unsigned int col_start = dev_ptr_set.hessian_34_col_start[idx_factor];
     unsigned int row_start_trans = dev_ptr_set.hessian_43_row_start[idx_factor];
     unsigned int col_start_trans = dev_ptr_set.hessian_43_col_start[idx_factor];
     for(int row = 0; row < 1; row++) {
@@ -2355,12 +2308,12 @@ __global__ void proj_2f1c_hessian_44(   // cur_td, cur_td
     // ********** start : read inputs **********
 
     T robust_info[2][2];
-    for(int i = 0; i < 4; i++) {
+    for(unsigned int i = 0; i < 4; i++) {
         robust_info[i / 2][i % 2] = __ldg(dev_ptr_set.robust_info + i * num_proj_factors + idx_factor);
     }
 
     T jacobian_4[2][1];
-    for(int i = 0; i < 2; i++) {
+    for(unsigned int i = 0; i < 2; i++) {
         jacobian_4[i / 1][i % 1] = __ldg(dev_ptr_set.jacobian_4 + i * num_proj_factors + idx_factor);
     }
 
@@ -2368,14 +2321,11 @@ __global__ void proj_2f1c_hessian_44(   // cur_td, cur_td
 
     // ********** start : compute and write outputs **********
 
-    unsigned int row_start = 0;
-    unsigned int col_start = 0;
-
     T left_row[2];
     T right_col[2];
     T temp[2];
-    row_start = dev_ptr_set.hessian_44_row_start[idx_factor];
-    col_start = dev_ptr_set.hessian_44_col_start[idx_factor];
+    unsigned int row_start = dev_ptr_set.hessian_44_row_start[idx_factor];
+    unsigned int col_start = dev_ptr_set.hessian_44_col_start[idx_factor];
     for(int row = 0; row < 1; row++) {
         for(int col = 0; col < 1; col++) {
             left_row[0] = jacobian_4[0][row];
