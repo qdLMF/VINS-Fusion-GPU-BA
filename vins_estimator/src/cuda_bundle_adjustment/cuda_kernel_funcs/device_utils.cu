@@ -76,7 +76,7 @@ __device__ void cauchy_loss(T delta, T err2, Eigen::Matrix<T, 3, 1>& rho) {
 
     rho[0] = dsqr * log(aux);   // c^2 * log( 1 + e^2/c^2 )
     rho[1] = 1.0 / aux;
-    rho[2] = -dsqrReci * std::pow(rho[1], 2);
+    rho[2] = -dsqrReci * pow(rho[1], 2);
 }
 // instantiation
 template __device__ void cauchy_loss<double>(double delta, double err2, Eigen::Matrix<double, 3, 1>& rho);
